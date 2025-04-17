@@ -10,7 +10,7 @@ cask "microsoft-office"
 cask "rectangle"
 cask "1password"
 cask "cursor"
-# cask "google-cloud-sdk" # Uncomment to install
+cask "zoom"
 
 # CLI Tools
 brew "wget"
