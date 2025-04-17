@@ -1,5 +1,3 @@
-tap "homebrew/cask"
-
 # GUI Applications
 cask "spotify"
 cask "notion"
