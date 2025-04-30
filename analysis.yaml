@@ -21,6 +21,6 @@ dependencies:
 - biopython
 - seaborn
 - photutils
-- cv2
+- opencv
 - python-kaleido
 - openpyxl
