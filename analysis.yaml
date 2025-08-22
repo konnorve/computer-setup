@@ -2,12 +2,13 @@ name: analysis
 channels:
 - conda-forge
 - bioconda
-- defaults
 dependencies:
 - pandas
+- xarray
 - biopython
 - numpy
 - dash
+- dask
 - matplotlib
 - toyplot
 - ipython
@@ -18,9 +19,10 @@ dependencies:
 - scikit-learn
 - tqdm
 - scipy
-- biopython
 - seaborn
-- photutils
 - opencv
+- photutils
 - python-kaleido
 - openpyxl
+- tifffile
+- zarr
