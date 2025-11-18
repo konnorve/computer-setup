@@ -26,3 +26,4 @@ dependencies:
 - openpyxl
 - tifffile
 - zarr
+- openai
