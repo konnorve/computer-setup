@@ -1,7 +1,0 @@
-# GUI Applications
-cask "visual-studio-code"
-cask "microsoft-office"
-cask "cursor"
-
-# CLI Tools
-brew "tree"

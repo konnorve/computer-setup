@@ -5,16 +5,19 @@ One-command bootstrap for a fresh macOS machine. Installs Homebrew, apps, CLI to
 ## Quick Start
 
 ```bash
+# Default profile (all)
 bash <(curl -fsSL https://raw.githubusercontent.com/konnorve/mac-setup/main/main.sh)
+
+# Or specify a profile
+bash <(curl -fsSL https://raw.githubusercontent.com/konnorve/mac-setup/main/main.sh) lean
 ```
 
-You'll be prompted to choose a profile:
+You'll be prompted for your sudo password once at the start, then everything runs autonomously.
 
-| # | Profile | What it installs |
-|---|---------|-----------------|
-| 1 | **all** | Spotify, Notion, Firefox, Slack, VS Code, Office, Rectangle, 1Password, Cursor, Zoom, wget, tree, imagemagick |
-| 2 | **lean** | Firefox, 1Password, Zoom |
-| 3 | **probe_wizard** | VS Code, Office, Cursor, tree |
+| Profile | What it installs |
+|---------|-----------------|
+| **all** (default) | Spotify, Notion, Firefox, Slack, VS Code, Office, Rectangle, 1Password, Cursor, Zoom, wget, tree, imagemagick |
+| **lean** | Firefox, 1Password, Zoom |
 
 After the Brewfile, the script installs [Miniforge](https://github.com/conda-forge/miniforge) (mamba/conda) and creates the `analysis` conda environment.
 
@@ -32,7 +35,6 @@ After the Brewfile, the script installs [Miniforge](https://github.com/conda-for
 main.sh              # Setup script (entry point)
 all.Brewfile          # Full Homebrew bundle
 lean.Brewfile         # Minimal Homebrew bundle
-probe_wizard.brewfile # Dev-focused Homebrew bundle
 analysis.yaml        # Conda environment definition
 ```
 

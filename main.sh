@@ -4,25 +4,29 @@ set -euo pipefail
 REPO_URL="https://raw.githubusercontent.com/konnorve/mac-setup/main"
 
 # ---------------------------------------------------------------------------
-# Profile selection
+# Profile selection (via argument; defaults to "all")
 # ---------------------------------------------------------------------------
-echo ""
-echo "Select a Brewfile profile:"
-echo "  1) all           - Full setup (apps, CLI tools)"
-echo "  2) lean          - Minimal (Firefox, 1Password, Zoom)"
-echo "  3) probe_wizard  - Dev tools (VS Code, Cursor, Office)"
-echo ""
-read -r -p "Enter choice [1]: " choice </dev/tty
-
-case "${choice:-1}" in
-  1) PROFILE="all.Brewfile" ;;
-  2) PROFILE="lean.Brewfile" ;;
-  3) PROFILE="probe_wizard.brewfile" ;;
-  *) echo "Invalid choice, defaulting to 'all'." ; PROFILE="all.Brewfile" ;;
+case "${1:-all}" in
+  all)  PROFILE="all.Brewfile" ;;
+  lean) PROFILE="lean.Brewfile" ;;
+  *)
+    echo "Usage: $0 [all|lean]"
+    exit 1
+    ;;
 esac
 
 echo "=> Using profile: $PROFILE"
 echo ""
+
+# ---------------------------------------------------------------------------
+# Acquire sudo up front and keep it alive for the duration of the script
+# ---------------------------------------------------------------------------
+echo "Sudo access is required for Homebrew installation."
+sudo -v
+# Refresh sudo timestamp in the background until this script exits.
+while true; do sudo -n true; sleep 50; done 2>/dev/null &
+SUDO_KEEPALIVE_PID=$!
+trap 'kill $SUDO_KEEPALIVE_PID 2>/dev/null' EXIT
 
 # ---------------------------------------------------------------------------
 # Homebrew
