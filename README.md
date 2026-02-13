@@ -12,7 +12,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/konnorve/mac-setup/main/main
 bash <(curl -fsSL https://raw.githubusercontent.com/konnorve/mac-setup/main/main.sh) lean
 ```
 
-You'll be prompted for your sudo password once at the start, then everything runs autonomously.
+Homebrew may prompt for your sudo password during installation.
 
 | Profile | What it installs |
 |---------|-----------------|

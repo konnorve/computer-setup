@@ -19,21 +19,11 @@ echo "=> Using profile: $PROFILE"
 echo ""
 
 # ---------------------------------------------------------------------------
-# Acquire sudo up front and keep it alive for the duration of the script
-# ---------------------------------------------------------------------------
-echo "Sudo access is required for Homebrew installation."
-sudo -v
-# Refresh sudo timestamp in the background until this script exits.
-while true; do sudo -n true; sleep 50; done 2>/dev/null &
-SUDO_KEEPALIVE_PID=$!
-trap 'kill $SUDO_KEEPALIVE_PID 2>/dev/null' EXIT
-
-# ---------------------------------------------------------------------------
 # Homebrew
 # ---------------------------------------------------------------------------
 if ! command -v brew &>/dev/null; then
-  echo "Installing Homebrew..."
-  NONINTERACTIVE=1 /bin/bash -c \
+  echo "Installing Homebrew (you may be prompted for your password)..."
+  /bin/bash -c \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
   echo "Homebrew already installed."
@@ -44,7 +34,9 @@ eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null \
   || /usr/local/bin/brew shellenv 2>/dev/null)"
 
 echo "Installing packages from ${PROFILE}..."
-curl -fsSL "${REPO_URL}/${PROFILE}" | brew bundle --file=-
+curl -fsSL "${REPO_URL}/${PROFILE}" -o /tmp/Brewfile
+brew bundle --file=/tmp/Brewfile
+rm -f /tmp/Brewfile
 
 # ---------------------------------------------------------------------------
 # Miniforge (mamba)
