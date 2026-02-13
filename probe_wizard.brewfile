@@ -5,6 +5,3 @@ cask "cursor"
 
 # CLI Tools
 brew "tree"
-
-# Conda/Mamba
-cask "mambaforge"

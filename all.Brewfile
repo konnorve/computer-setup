@@ -9,11 +9,12 @@ cask "rectangle"
 cask "1password"
 cask "cursor"
 cask "zoom"
+cask "inkscape"
+cask "kiwix"
+cask "teamviewer"
+cask "discord"
 
 # CLI Tools
 brew "wget"
 brew "tree"
 brew "imagemagick"
-
-# Conda/Mamba
-cask "mambaforge"
