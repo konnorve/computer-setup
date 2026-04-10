@@ -8,6 +8,7 @@ sudo apt update
 sudo apt install -y \
   ca-certificates \
   curl \
+  gettext \
   git \
   gpg \
   imagemagick \
