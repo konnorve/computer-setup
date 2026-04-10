@@ -48,10 +48,14 @@ There is no `all`/`lean` switch on Ubuntu—everything below is installed every 
 | Package | Role |
 |---------|------|
 | `ca-certificates`, `curl`, `git`, `gpg`, `make`, `wget` | Core tooling |
+| `gettext` | `msgfmt` for building Blur My Shell |
+| `software-properties-common` | `add-apt-repository` for keyd PPA |
 | `tree` | Directory listing |
 | `imagemagick` | Image conversion / CLI |
 | `inkscape` | Vector graphics |
 | `libreoffice` | Office suite |
+| `gnome-shell-extension-user-theme` | User Themes (when available from apt) |
+| **keyd** (from [keyd PPA](https://launchpad.net/~keyd-team/+archive/ubuntu/ppa)) | Optional Mac-style Super↔Ctrl swap for Cmd-like shortcuts |
 
 **`.deb` (downloaded)**
 
@@ -74,10 +78,11 @@ There is no `all`/`lean` switch on Ubuntu—everything below is installed every 
 | Item | Role |
 |------|------|
 | **Tailscale** | VPN/mesh (`tailscale.com/install.sh`) |
-| **WhiteSur GTK + icon themes** | Cloned from GitHub, run each theme’s `install.sh`, then `gsettings` to **WhiteSur-Dark** |
-| **Blur My Shell** | GNOME extension (`make install` from cloned repo; extension enabled if possible) |
+| **WhiteSur GTK + icon themes** | Cloned from GitHub; GTK installer runs with `--libadwaita`; `gsettings` for **WhiteSur-Dark** GTK/icons, **mac-style window buttons** (left), and shell theme via **User Themes** when enabled |
+| **Extension Manager** (snap) | Fallback to install **User Themes** if the apt package is missing |
+| **Blur My Shell** | GNOME extension (`make install` from cloned repo; enable after logging back in if needed) |
 
-Afterward, log out and back in if themes or the extension do not apply, then run `sudo tailscale up`.
+Afterward, **log out and back in** so themes, extensions, and **keyd** apply reliably, then run `sudo tailscale up`. If the shell still looks default, enable **User Themes** in Extension Manager and pick **WhiteSur-Dark** under Appearance in **Tweaks**.
 
 ## Files
 
