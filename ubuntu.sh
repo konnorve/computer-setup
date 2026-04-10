@@ -10,7 +10,9 @@ sudo apt install -y \
   curl \
   git \
   gpg \
+  imagemagick \
   make \
+  tree \
   wget \
   inkscape \
   libreoffice
@@ -31,6 +33,12 @@ sudo snap install firefox
 
 echo "==> Spotify"
 sudo snap install spotify
+
+echo "==> Notion"
+sudo snap install notion-desktop
+
+echo "==> Zoom"
+sudo snap install zoom-client
 
 echo "==> WhiteSur GTK theme"
 cd "$HOME"
