@@ -1,18 +1,26 @@
-# mac-setup
+# computer-setup
 
-One-command bootstrap for a fresh macOS machine. Installs Homebrew, apps, CLI tools, Miniforge, and conda environments.
+One-command bootstrap for a fresh machine on **macOS** or **Ubuntu**. macOS installs Homebrew, apps, CLI tools, Miniforge, and conda environments; Ubuntu installs desktop apps, themes, and tools via `apt`/`snap`.
 
-## Quick Start
+## macOS — Quick Start
 
 ```bash
 # Default profile (all)
-bash <(curl -fsSL https://raw.githubusercontent.com/konnorve/mac-setup/main/main.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/konnorve/computer-setup/main/main.sh)
 
 # Or specify a profile
-bash <(curl -fsSL https://raw.githubusercontent.com/konnorve/mac-setup/main/main.sh) lean
+bash <(curl -fsSL https://raw.githubusercontent.com/konnorve/computer-setup/main/main.sh) lean
 ```
 
 Homebrew may prompt for your sudo password during installation.
+
+## Ubuntu — Quick Start
+
+Assumes `curl` is already installed. The script uses `sudo` and targets a typical **Ubuntu Desktop** (GNOME) session.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/konnorve/computer-setup/main/ubuntu.sh | bash
+```
 
 | Profile | What it installs |
 |---------|-----------------|
@@ -29,16 +37,28 @@ After the Brewfile, the script installs [Miniforge](https://github.com/conda-for
 4. Runs `mamba init` for zsh and bash
 5. Creates the **analysis** conda environment from `analysis.yaml`
 
+## Ubuntu: what `ubuntu.sh` does
+
+Installs base packages (`apt`), VS Code and Firefox (`snap`), 1Password, Tailscale, Spotify, WhiteSur GTK/icon themes, and the Blur My Shell GNOME extension. You may need to log out and back in, then run `sudo tailscale up`.
+
 ## Files
 
 ```
-main.sh              # Setup script (entry point)
-all.Brewfile          # Full Homebrew bundle
-lean.Brewfile         # Minimal Homebrew bundle
+main.sh              # macOS setup script (entry point)
+ubuntu.sh            # Ubuntu setup script (apt/snap, GNOME themes)
+all.Brewfile         # Full Homebrew bundle
+lean.Brewfile        # Minimal Homebrew bundle
 analysis.yaml        # Conda environment definition
 ```
 
 ## Requirements
 
-- macOS (Apple Silicon or Intel)
+**macOS**
+
+- Apple Silicon or Intel
+- Internet connection
+
+**Ubuntu**
+
+- Desktop install with GNOME (for theme/extension steps)
 - Internet connection
