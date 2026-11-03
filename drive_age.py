@@ -7,8 +7,10 @@
 
 Ages use last modification and calendar months, not creation or last access.
 Percentages overlap and use files with readable metadata. Root rows count
-root files only. Errors count failed operations, not missing files. Links/junctions are
-skipped; hard-linked file paths are counted separately. No file contents read.
+root files only (shown when nonempty or items were skipped). Console percentages
+are rounded to whole numbers; CSV retains two decimal places and error/link counts.
+Errors count failed operations, not missing files. Links/junctions are skipped;
+hard-linked file paths are counted separately. No file contents read.
 """
 import argparse
 import calendar
@@ -43,8 +45,6 @@ def scan(root: str, cutoffs: list[float]) -> dict:
     while pending:
         folder, group = pending.pop()
         counts = rows[group]
-        if group is None or folder == os.path.join(root, group):
-            print(f"Scanning {folder}", file=sys.stderr, flush=True)
         try:
             with os.scandir(folder) as entries:
                 for entry in entries:
@@ -85,20 +85,33 @@ def main() -> None:
         parser.error(f"Output already exists: {args.csv}")
     now = datetime.now()
     cutoffs = [months_ago(now, months) for months in (1, 6, 12)]
-    print(f"Last-modified age as of {now.isoformat(timespec='seconds')} (local time)")
-    print(f"{'Files':>10} {'>1 month':>9} {'>6 months':>9} {'>1 year':>9} "
-          f"{'Errors':>7} {'Links':>7}  Folder", flush=True)
+    print(f"Last-modified age as of {now.isoformat(timespec='seconds')} (local time)",
+          flush=True)
     report = []
     for root in dict.fromkeys(os.path.abspath(p) for p in (args.roots or windows_drives())):
+        print("\n" + root.replace("\\", "/"), flush=True)
         rows = scan(root, cutoffs)
+        table = [["Directory name", ">1mo", ">6mo", ">1yr"]]
         for group in sorted(rows, key=lambda name: (name is not None, name or "")):
             total, *older, errors, links = rows[group]
             percentages = [f"{100 * n / total:.2f}" if total else "" for n in older]
             path = os.path.join(root, group) if group is not None else root
             report.append([path, total, *percentages, errors, links])
-            display = " ".join(f"{p + '%' if p else 'N/A':>9}" for p in percentages)
-            label = path + (" (root files only)" if group is None else "")
-            print(f"{total:>10,} {display} {errors:>7} {links:>7}  {label}", flush=True)
+            if group is not None or any(rows[group]):
+                label = group if group is not None else "(root files only)"
+                display = [f"{100 * n / total:.0f}%" if total else "N/A" for n in older]
+                table.append([label, *display])
+        width = max(len(row[0]) for row in table)
+        for name, *values in table:
+            print(f"{name:<{width}}  " + "  ".join(f"{value:>6}" for value in values),
+                  flush=True)
+        if len(table) == 1:
+            print("(No files or folders found.)", flush=True)
+        errors = sum(counts[4] for counts in rows.values())
+        links = sum(counts[5] for counts in rows.values())
+        if errors or links:
+            print(f"Note: {errors} failed operations; {links} links/junctions skipped. "
+                  "Percentages cover scanned files only.", flush=True)
     if args.csv:
         with open(args.csv, "x", newline="", encoding="utf-8-sig") as output:
             writer = csv.writer(output)
