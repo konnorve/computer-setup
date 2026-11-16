@@ -84,6 +84,28 @@ There is no `all`/`lean` switch on Ubuntu—everything below is installed every 
 
 Afterward, **log out and back in** so themes, extensions, and **keyd** apply reliably, then run `sudo tailscale up`. If the shell still looks default, enable **User Themes** in Extension Manager and pick **WhiteSur-Dark** under Appearance in **Tweaks**.
 
+## Windows - old imaging files
+
+`cleanup_old_files.ps1` previews `.tif`, `.tiff`, and `.pos` files last modified
+more than one year ago, including subfolders. Add `-Delete` to permanently
+delete them (no Recycle Bin). Each run scans the specified directories again.
+
+Run in PowerShell; replace the example directories:
+
+```powershell
+Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/konnorve/computer-setup/main/cleanup_old_files.ps1" -OutFile cleanup_old_files.ps1
+
+# Preview
+.\cleanup_old_files.ps1 -Directories 'E:\Imaging', 'F:\OldData'
+
+# Delete
+.\cleanup_old_files.ps1 -Directories 'E:\Imaging', 'F:\OldData' -Delete
+```
+
+If scripts are disabled, use `Set-ExecutionPolicy -Scope Process RemoteSigned`
+for this window. If the downloaded file is blocked, review it and run
+`Unblock-File -LiteralPath .\cleanup_old_files.ps1`.
+
 ## Files
 
 ```
@@ -92,6 +114,7 @@ ubuntu.sh            # Ubuntu setup script (apt/snap, GNOME themes)
 all.Brewfile         # Full Homebrew bundle
 lean.Brewfile        # Minimal Homebrew bundle
 analysis.yaml        # Conda environment definition
+cleanup_old_files.ps1 # Windows imaging file cleanup
 ```
 
 ## Requirements
