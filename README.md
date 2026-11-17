@@ -88,7 +88,9 @@ Afterward, **log out and back in** so themes, extensions, and **keyd** apply rel
 
 `cleanup_old_files.ps1` previews `.tif`, `.tiff`, and `.pos` files last modified
 more than one year ago, including subfolders. Add `-Delete` to permanently
-delete them (no Recycle Bin). Each run scans the specified directories again.
+delete them (no Recycle Bin) and remove empty subfolders, including those emptied
+by this cleanup. Preview also lists folders that would be removed. Your specified
+root directories are kept, and hidden files count as contents. Each run scans again.
 
 Run in PowerShell; replace the example directories:
 
