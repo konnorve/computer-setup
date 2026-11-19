@@ -11,7 +11,7 @@ $cutoff = (Get-Date).AddYears(-1)
 $files = @(
     Get-ChildItem -LiteralPath $Directories -File -Recurse |
         Where-Object {
-            $_.Extension -in '.tif', '.tiff', '.pos' -and
+            $_.Extension -in '.tif', '.tiff', '.pos', '.json', '.index', '.txt', '.zip', '.png', '.pos~', '.jpg' -and
             $_.LastWriteTime -lt $cutoff
         } |
         Sort-Object FullName -Unique
